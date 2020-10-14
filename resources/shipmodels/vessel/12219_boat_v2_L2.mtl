@@ -1,0 +1,104 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# File Created: 16.12.2011 14:18:52
+
+newmtl white
+	Ns 53.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.6667 0.6667 0.6667
+	Kd 0.6667 0.6667 0.6667
+	Ks 0.1800 0.1800 0.1800
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boat_elements_black
+	Ns 55.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.0000 0.0000 0.0000
+	Kd 0.0000 0.0000 0.0000
+	Ks 0.3600 0.3600 0.3600
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boat_glass
+	Ns 60.0000
+	Ni 7.0000
+	d 0.4000
+	Tr 0.6000
+	Tf 0.4000 0.4000 0.4000 
+	illum 2
+	Ka 0.1059 0.1569 0.1451
+	Kd 0.1059 0.1569 0.1451
+	Ks 0.6750 0.6750 0.6750
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boat_screw_hooks_bronze
+	Ns 80.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.2941 0.2157 0.0510
+	Kd 0.2941 0.2157 0.0510
+	Ks 0.7200 0.7200 0.7200
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boat_silver
+	Ns 80.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 0.3333 0.3333 0.3333
+	Kd 0.3333 0.3333 0.3333
+	Ks 0.7200 0.7200 0.7200
+	Ke 0.0000 0.0000 0.0000
+
+newmtl boat_buffer
+	Ns 10.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.2700 0.2700 0.2700
+	Ke 0.0000 0.0000 0.0000
+	map_Ka boat_buffer_diffuse.jpg
+	map_Kd boat_buffer_diffuse.jpg
+
+newmtl boat_roof_accessory
+	Ns 15.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.3600 0.3600 0.3600
+	Ke 0.0000 0.0000 0.0000
+	map_Ka boat_roof_accessory_diffuse.jpg
+	map_Kd boat_roof_accessory_diffuse.jpg
+
+newmtl boat_body
+	Ns 55.0000
+	Ni 1.5000
+	d 1.0000
+	Tr 0.0000
+	Tf 1.0000 1.0000 1.0000 
+	illum 2
+	Ka 1.0000 1.0000 1.0000
+	Kd 1.0000 1.0000 1.0000
+	Ks 0.3600 0.3600 0.3600
+	Ke 0.0000 0.0000 0.0000
+	map_Ka boat_body_diffuse.jpg
+	map_Kd boat_body_diffuse.jpg
