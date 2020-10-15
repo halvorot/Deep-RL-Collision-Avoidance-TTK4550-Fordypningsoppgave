@@ -22,8 +22,6 @@ Note: Pybullet needs Microsoft Visual C++ 14.0. Install it with "Build Tools for
 
 Note: Stable-Baselines only supports Tensorflow 1.14, Tensorflow 2 support is planned. 
 
-(Might work without) ! Add "ffmpeg-20200831-4a11a6f-win64-static\bin" to PATH
-
 ! Install Microsoft MPI (https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi) (msmpisetup.exe , not SDK)
 
 Note: Run the following __first__.
