@@ -80,7 +80,7 @@ def report(env, report_dir, lastn=100):
         ax.set_ylabel(r"Collisions")
         ax.set_xlabel(r"Episode")
         ax.legend()
-        fig.savefig(os.path.join(report_dir, 'collisions.pdf'), format='pdf')
+        fig.savefig(os.path.join(report_dir, 'collisions.pdf'), format='pdf', bbox_inches='tight')
         plt.close(fig)
 
         cross_track_errors = np.array([obj['cross_track_error'] for obj in env.history])
@@ -93,7 +93,7 @@ def report(env, report_dir, lastn=100):
         ax.set_ylabel(r"Avg. Cross-Track Error")
         ax.set_xlabel(r"Episode")
         #ax.legend()
-        fig.savefig(os.path.join(report_dir, 'cross_track_error.pdf'), format='pdf')
+        fig.savefig(os.path.join(report_dir, 'cross_track_error.pdf'), format='pdf', bbox_inches='tight')
         plt.close(fig)
 
         rewards = np.array([obj['reward'] for obj in env.history])
@@ -106,7 +106,7 @@ def report(env, report_dir, lastn=100):
         ax.set_ylabel(r"Reward")
         ax.set_xlabel(r"Episode")
         #ax.legend()
-        fig.savefig(os.path.join(report_dir, 'reward.pdf'), format='pdf')
+        fig.savefig(os.path.join(report_dir, 'reward.pdf'), format='pdf', bbox_inches='tight')
         plt.close(fig)
 
         progresses = np.array([obj['progress'] for obj in env.history])
@@ -120,7 +120,7 @@ def report(env, report_dir, lastn=100):
         ax.set_ylabel(r"Progress [%]")
         ax.set_xlabel(r"Episode")
         #ax.legend()
-        fig.savefig(os.path.join(report_dir, 'progress.pdf'), format='pdf')
+        fig.savefig(os.path.join(report_dir, 'progress.pdf'), format='pdf', bbox_inches='tight')
         plt.close(fig)
 
         timesteps = np.array([obj['timesteps'] for obj in env.history])
@@ -133,7 +133,7 @@ def report(env, report_dir, lastn=100):
         ax.set_ylabel(r"Timesteps")
         ax.set_xlabel(r"Episode")
         #ax.legend()
-        fig.savefig(os.path.join(report_dir, 'timesteps.pdf'), format='pdf')
+        fig.savefig(os.path.join(report_dir, 'timesteps.pdf'), format='pdf', bbox_inches='tight')
         plt.close(fig)
 
         plt.clf()
@@ -446,7 +446,7 @@ def plot_trajectory(env, fig_dir, local=False, size=100, fig_prefix='', episode_
             bbox=dict(facecolor='tab:red', edgecolor='black', alpha=0.75, boxstyle='round')
         )
 
-    fig.savefig(os.path.join(fig_dir, '{}path.pdf'.format(fig_prefix)), format='pdf')
+    fig.savefig(os.path.join(fig_dir, '{}path.pdf'.format(fig_prefix)), format='pdf', bbox_inches='tight')
     plt.close(fig)
 
 def plot_scenario(env, fig_dir, fig_postfix='', show=True):
@@ -556,7 +556,7 @@ def plot_scenario(env, fig_dir, fig_postfix='', show=True):
         bbox=dict(facecolor='tab:red', edgecolor='black', alpha=0.75, boxstyle='round')
     )
 
-    fig.savefig(os.path.join(fig_dir, 'Scenario_{}.pdf'.format(fig_postfix)), format='pdf')
+    fig.savefig(os.path.join(fig_dir, 'Scenario_{}.pdf'.format(fig_postfix)), format='pdf', bbox_inches='tight')
     if show:
         plt.show()
     plt.close(fig)
@@ -634,7 +634,7 @@ def plot_actions(env, agent, fig_dir, fig_prefix='', N=500, creategifs=True, cre
         ax.set_xlabel(r"Relative Obstacle Angle")
         ax.xaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.1f}°'.format(y*180/np.pi)))
         ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f} m'.format(y)))
-        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_thrust_contour.pdf'))
+        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_thrust_contour.pdf'), bbox_inches='tight')
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -646,7 +646,7 @@ def plot_actions(env, agent, fig_dir, fig_prefix='', N=500, creategifs=True, cre
         ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f}m'.format(y)))
         ax.xaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f}°'.format(y*180/np.pi)))
         ax.zaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.2f}N'.format(y)))
-        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_thrust_surface.pdf'))
+        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_thrust_surface.pdf'), bbox_inches='tight')
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -657,7 +657,7 @@ def plot_actions(env, agent, fig_dir, fig_prefix='', N=500, creategifs=True, cre
         ax.set_xlabel(r"Relative Obstacle Angle")
         ax.xaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.1f}°'.format(y*180/np.pi)))
         ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f} m'.format(y)))
-        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_steering_contour.pdf'))
+        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_steering_contour.pdf'), bbox_inches='tight')
 
         fig = plt.figure()
         ax = fig.add_subplot(111)
@@ -669,7 +669,7 @@ def plot_actions(env, agent, fig_dir, fig_prefix='', N=500, creategifs=True, cre
         ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f}m'.format(y)))
         ax.xaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f}°'.format(y*180/np.pi)))
         ax.zaxis.set_major_formatter(FuncFormatter(lambda y, _: '{:.0f}°'.format(y*180/np.pi)))
-        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_steering_surface.pdf'))
+        plt.savefig(os.path.join(fig_dir, fig_prefix + 'policy_plot_steering_surface.pdf'), bbox_inches='tight')
 
 def plot_streamlines(env, agent, fig_dir, fig_prefix='', N=11):
     OBST_POSITION = [0, 50]
@@ -754,7 +754,7 @@ def plot_streamlines(env, agent, fig_dir, fig_prefix='', N=11):
     )
     #ax.legend()
 
-    fig.savefig(os.path.join(fig_dir, fig_prefix+'streamlines.pdf'), format='pdf')
+    fig.savefig(os.path.join(fig_dir, fig_prefix+'streamlines.pdf'), format='pdf', bbox_inches='tight')
     plt.close(fig)
 
 def plot_vector_field(env, agent, fig_dir, fig_prefix='', xstep=2.0, ystep=5.0, obstacle=True):
@@ -870,7 +870,7 @@ def plot_vector_field(env, agent, fig_dir, fig_prefix='', xstep=2.0, ystep=5.0, 
 
     #ax.legend()
 
-    fig.savefig(os.path.join(fig_dir, fig_prefix + 'vector_field.pdf'), format='pdf')
+    fig.savefig(os.path.join(fig_dir, fig_prefix + 'vector_field.pdf'), format='pdf', bbox_inches='tight')
     plt.close(fig)
 
 def test_report(fig_dir):
