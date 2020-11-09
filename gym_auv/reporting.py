@@ -60,6 +60,7 @@ def report(env, report_dir, lastn=100):
             f.write('{:<30}{:<30.2f}\n'.format('Avg. Duration', duration.mean()))
             f.write('{:<30}{:<30.2f}\n'.format('Avg. Pathlength', pathlengths.mean()))
             f.write('{:<30}{:<30.2f}\n'.format('Avg. Speed', speeds.mean()))
+            f.write('{:<30}{:<30.2f}\n'.format('Max. Speed', speeds.max()))
 
         plt.style.use('ggplot')
         plt.rc('font', family='serif')
