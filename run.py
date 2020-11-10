@@ -17,6 +17,7 @@ from stable_baselines.common.policies import MlpPolicy, MlpLstmPolicy, MlpLnLstm
 from stable_baselines.common.vec_env import VecVideoRecorder, DummyVecEnv, SubprocVecEnv
 import stable_baselines.ddpg.policies
 import stable_baselines.td3.policies
+import stable_baselines.sac.policies
 from stable_baselines.ddpg import AdaptiveParamNoiseSpec, NormalActionNoise, LnMlpPolicy
 from stable_baselines import PPO2, DDPG, TD3, A2C, ACER, ACKTR, SAC
 from sklearn.model_selection import ParameterGrid
@@ -212,7 +213,8 @@ def main(args):
         'td3': TD3,
         'a2c': A2C,
         'acer': ACER,
-        'acktr': ACKTR
+        'acktr': ACKTR,
+        'sac': SAC
     }[args.algo.lower()]
 
     if args.mode == 'play':
@@ -382,6 +384,8 @@ def main(args):
                 agent = ACER(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
             elif model == ACKTR:
                 agent = ACKTR(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
+            elif model == SAC:
+                agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
 
         print('Training {} agent on "{}"'.format(args.algo.upper(), env_id))
 
@@ -677,7 +681,7 @@ if __name__ == '__main__':
         '--algo',
         help='RL algorithm to use.',
         default='ppo',
-        choices=['ppo', 'ddpg', 'td3', 'a2c', 'acer', 'acktr']
+        choices=['ppo', 'ddpg', 'td3', 'a2c', 'acer', 'acktr', 'sac']
     )
     parser.add_argument(
         '--render',
