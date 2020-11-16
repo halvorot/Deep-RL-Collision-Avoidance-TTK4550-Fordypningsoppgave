@@ -22,6 +22,7 @@ from stable_baselines.ddpg import AdaptiveParamNoiseSpec, NormalActionNoise, LnM
 from stable_baselines import PPO2, DDPG, TD3, A2C, ACER, ACKTR, SAC
 from sklearn.model_selection import ParameterGrid
 from shapely import speedups
+from stable_baselines.gail import ExpertDataset
 
 speedups.enable()
 DIR_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -72,6 +73,17 @@ def play_scenario(env, recorded_env, args, agent=None):
     key_input = np.array([-1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
     autopilot = False
 
+    # gail_expert_generation = False
+    # gail_actions = []
+    # gail_observations = []
+    # gail_rewards = []
+    # gail_num_episodes = 2
+    # gail_episode_returns = np.zeros((gail_num_episodes,))
+    # gail_episode_starts = []
+    # gail_reward_sum = 0
+    # gail_ep_idx = 0
+    
+
     print('Playing scenario: ', env)
 
     def key_press(k, mod):
@@ -93,6 +105,9 @@ def play_scenario(env, recorded_env, args, agent=None):
         if k == key.A: 
             autopilot = not autopilot
             print('Autopilot {}'.format(autopilot))
+        # if k == key.E: 
+        #     gail_expert_generation = not gail_expert_generation
+        #     print('gail_expert_generation {}'.format(gail_expert_generation))
 
     def key_release(k, mod):
         nonlocal restart, quit
@@ -170,6 +185,17 @@ def play_scenario(env, recorded_env, args, agent=None):
                     else:
                         a, _ = agent.predict(obs, deterministic=True)
                 obs, r, done, info = env.step(a)
+
+                
+                # gail_observations.append(obs)
+                # gail_actions.append(a)
+                # gail_rewards.append(r)
+                # gail_episode_starts.append(done)
+                # gail_reward_sum += r
+
+                # if gail_ep_idx >= gail_num_episodes and gail_expert_generation:
+                #     break
+
                 if args.verbose > 0:
                     print(', '.join('{:.1f}'.format(x) for x in obs) + '(size {})'.format(len(obs)))
                 recorded_env.render()
@@ -184,13 +210,33 @@ def play_scenario(env, recorded_env, args, agent=None):
                             )
 
                 if quit: raise KeyboardInterrupt
-                if done or restart: break
+                if done or restart: 
+                    # gail_episode_returns[gail_ep_idx] = gail_reward_sum
+                    # gail_reward_sum = 0
+                    # gail_ep_idx += 1
+                    break
             
             env.seed(np.random.randint(1000))
             env.save_latest_episode()
             gym_auv.reporting.report(env, report_dir='logs/play_results/')
             gym_auv.reporting.plot_trajectory(env, fig_dir='logs/play_results/')
             env.reset(save_history=False)
+        
+            # if gail_ep_idx >= gail_num_episodes and gail_expert_generation:
+            #     gail_observations = np.concatenate(gail_observations).reshape((-1,) + env.observation_space.shape)
+            #     gail_actions = np.concatenate(gail_actions).reshape((-1,) + env.action_space.shape)
+            #     gail_rewards = np.array(gail_rewards)
+            #     gail_episode_starts = np.array(gail_episode_starts[:-1])
+            #     gail_numpy_dict = {
+            #     'actions': gail_actions,
+            #     'obs': gail_observations,
+            #     'rewards': gail_rewards,
+            #     'episode_returns': gail_episode_returns,
+            #     'episode_starts': gail_episode_starts
+            #     }
+            #     np.savez('gail_expert', **gail_numpy_dict)
+            
+            
 
     except KeyboardInterrupt:
         pass
@@ -341,6 +387,10 @@ def main(args):
                         vec_env, verbose=True, tensorboard_log=tensorboard_log, 
                         **hyperparams, policy_kwargs=policy_kwargs
                     )
+                    #dataset = ExpertDataset(expert_path='gail_expert.npz', traj_limitation=1, batch_size=128)
+                    #print('Pretraining {} agent on "{}"'.format(args.algo.upper(), env_id))
+                    #agent.pretrain(dataset, n_epochs=1000)
+                    #print('Done pretraining {} agent on "{}"'.format(args.algo.upper(), env_id))
             elif (model == DDPG):
                 hyperparams = {
                     'memory_limit': 1000000,
