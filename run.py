@@ -392,6 +392,12 @@ def main(args):
                     #agent.pretrain(dataset, n_epochs=1000)
                     #print('Done pretraining {} agent on "{}"'.format(args.algo.upper(), env_id))
             elif (model == DDPG):
+                # rl-baselines-zoo inspired:
+                # hyperparams = {
+                #     'memory_limit': 50000,
+                #     'noise_type': 'ornstein-uhlenbeck',
+                #     'noise_std': 0.1
+                # }
                 hyperparams = {
                     'memory_limit': 1000000,
                     'normalize_observations': True,
@@ -406,6 +412,13 @@ def main(args):
                     vec_env, verbose=True, tensorboard_log=tensorboard_log, **hyperparams
                 )
             elif (model == TD3):
+                # rl-baselines-zoo inspired:
+                # hyperparams = {
+                #     'batch_size': 256,
+                #     'noise_std': 0.1,
+                #     'noise_type': 'ornstein-uhlenbeck',
+                #     'learning_starts': 1000
+                # }
                 hyperparams = {
                     'buffer_size': 1000000,
                     'train_freq': 1000,
@@ -417,6 +430,14 @@ def main(args):
                     vec_env, verbose=True, tensorboard_log=tensorboard_log, action_noise=action_noise, **hyperparams
                 )
             elif model == A2C:
+                # rl-baselines-zoo inspired:
+                # hyperparams = {
+                #     'n_steps': 5,
+                #     'gamma': 0.995,
+                #     'ent_coef': 0.00001,
+                #     'learning_rate': 0.00083,
+                #     'lr_schedule': 'linear'
+                # }
                 hyperparams = {
                     'n_steps': 16,
                     'gamma': 0.99,
@@ -433,6 +454,16 @@ def main(args):
             elif model == ACER:
                 agent = ACER(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
             elif model == ACKTR:
+                # rl-baselines-zoo inspired:
+                # hyperparams = {
+                #     'normalize': True
+                #     'gamma': 0.99
+                #     'n_steps': 16
+                #     'ent_coef': 0.0
+                #     'learning_rate': 0.06
+                #     'lr_schedule': 'constant'
+                # }
+                # agent = ACKTR(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log, **hyperparams)
                 agent = ACKTR(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
             elif model == SAC:
                 agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
