@@ -395,8 +395,13 @@ def main(args):
                 # rl-baselines-zoo inspired:
                 # hyperparams = {
                 #     'memory_limit': 50000,
-                #     'noise_type': 'ornstein-uhlenbeck',
-                #     'noise_std': 0.1
+                #     'normalize_observations': True,
+                #     'normalize_returns': False,
+                #     'gamma': 0.98,
+                #     'actor_lr': 0.00156,
+                #     'critic_lr': 0.00156,
+                #     'batch_size': 256,
+                #     'param_noise': AdaptiveParamNoiseSpec(initial_stddev=0.1, desired_action_stddev=0.1)
                 # }
                 hyperparams = {
                     'memory_limit': 1000000,
@@ -415,8 +420,7 @@ def main(args):
                 # rl-baselines-zoo inspired:
                 # hyperparams = {
                 #     'batch_size': 256,
-                #     'noise_std': 0.1,
-                #     'noise_type': 'ornstein-uhlenbeck',
+                #     'buffer_size': 50000,
                 #     'learning_starts': 1000
                 # }
                 hyperparams = {
@@ -438,6 +442,7 @@ def main(args):
                 #     'learning_rate': 0.00083,
                 #     'lr_schedule': 'linear'
                 # }
+                # layers = [256, 128, 64]
                 hyperparams = {
                     'n_steps': 16,
                     'gamma': 0.99,
@@ -456,16 +461,21 @@ def main(args):
             elif model == ACKTR:
                 # rl-baselines-zoo inspired:
                 # hyperparams = {
-                #     'normalize': True
-                #     'gamma': 0.99
-                #     'n_steps': 16
-                #     'ent_coef': 0.0
-                #     'learning_rate': 0.06
+                #     'gamma': 0.99,
+                #     'n_steps': 16,
+                #     'ent_coef': 0.0,
+                #     'learning_rate': 0.06,
                 #     'lr_schedule': 'constant'
                 # }
                 # agent = ACKTR(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log, **hyperparams)
                 agent = ACKTR(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
             elif model == SAC:
+                # rl-baselines-zoo inspired:
+                # hyperparams = {
+                #     'batch_size': 256,
+                #     'learning_starts': 1000
+                # }
+                # agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log, **hyperparams)
                 agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
 
         print('Training {} agent on "{}"'.format(args.algo.upper(), env_id))
