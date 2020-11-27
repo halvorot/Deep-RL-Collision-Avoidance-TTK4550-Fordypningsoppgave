@@ -284,6 +284,11 @@ def main(args):
     elif (args.mode == 'enjoy'):
         agent = model.load(args.agent)
 
+        figure_folder = os.path.join(DIR_PATH, 'logs', 'enjoys', args.env, EXPERIMENT_ID)
+        os.makedirs(figure_folder, exist_ok=True)
+        scenario_folder = os.path.join(figure_folder, 'scenarios')
+        os.makedirs(scenario_folder, exist_ok=True)
+
         video_folder = os.path.join(DIR_PATH, 'logs', 'videos', args.env, EXPERIMENT_ID)
         os.makedirs(video_folder, exist_ok=True)
         
@@ -296,6 +301,7 @@ def main(args):
         )
         obs = recorded_env.reset()
         state = None
+        t_steps = 0
         done = [False for _ in range(vec_env.num_envs)]
         for _ in range(args.recording_length):
             if args.recurrent:
@@ -304,7 +310,12 @@ def main(args):
             else:
                 action, _states = agent.predict(obs, deterministic=not args.stochastic)
             obs, reward, done, info = recorded_env.step(action)
+            t_steps += 1
             recorded_env.render()
+            if t_steps % 1000 == 0:
+                env.save_latest_episode(save_history=False)
+                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_{}'.format(t_steps)))
+                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_{}_local'.format(t_steps)), local=True)
         recorded_env.close()
 
     elif (args.mode == 'train'):
@@ -662,7 +673,7 @@ def main(args):
                 sys.stdout.write(report_msg)
                 sys.stdout.flush()
 
-                if args.save_snapshots and t_steps % 30 == 0 and not done:
+                if args.save_snapshots and t_steps % 1000 == 0 and not done:
                     env.save_latest_episode(save_history=False)
                     for size in (20, 50, 100, 200, 300, 400, 500):
                         gym_auv.reporting.plot_trajectory(
