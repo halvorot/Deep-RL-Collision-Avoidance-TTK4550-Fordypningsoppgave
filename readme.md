@@ -46,11 +46,9 @@ python run.py enjoy MovingObstaclesNoRules-v0 --algo algorithm --agent path\to\a
 ## Background
 
 This Python package, which provides an easily expandable code framework for simulating autonomous surface vessels
-in maritime environments, as well as training reinforcement learning-based AI agents to guide them, was developed as a part of my Master's thesis at the Norwegian University of Science and Technology.
+in maritime environments, as well as training reinforcement learning-based AI agents to guide them, was developed as a part of Eivind Meyers Master's thesis at the Norwegian University of Science and Technology. It was later updated by me for easier installation and setup. 
 
-Apart from the underlying simulation engine, which simulates the vessel dynamics according to well-researched manuevering theory,
-as well as the functioning of a LiDAR-based sensor suite for distance measurements.
-it also provides easy-to-use rendering in both 2D and 3D for debugging and showcasing purposes. Implemented as an extention of the OpenAI gym toolkit, it offers an easy-to-use interface for training state-of-the-art deep reinforcement learning algorithms for guiding the vessel.
+Apart from the underlying simulation engine, which simulates the vessel dynamics according to well-researched manuevering theory, as well as the functioning of a LiDAR-based sensor suite for distance measurements, it also provides easy-to-use rendering in both 2D and 3D for debugging and showcasing purposes. Implemented as an extention of the OpenAI gym toolkit, it offers an easy-to-use interface for training state-of-the-art deep reinforcement learning algorithms for guiding the vessel.
 
 The research paper [Taming an Autonomous Surface Vehicle for Path Following and Collision Avoidance Using Deep Reinforcement Learning (2020)](https://ieeexplore.ieee.org/document/9016254?fbclid=IwAR3obkbKJcbA2Jrn3nqKp7iUD_MAag01YSCm3liaIYJN7xN9enzdHUA0Ma8) gives a comprehensive overview of what the package is intended for.
 
@@ -59,6 +57,7 @@ The research paper [Taming an Autonomous Surface Vehicle for Path Following and 
 
 
 ## Structure
+The explanation of the software structure is taken from Eivind Meyers repository [gym-auv](https://github.com/EivMeyer)
 The core component of **gym** is the environment abstraction Env, which represents the generalized RL environment . Notably, **gym** does not include a built-in Agent class of any kind. Instead, all the fundamental functionality required for an RL application, i.e. agent perception, reward calculation and action execution / environment updates are handled by the Env instance. Fundamentally, extensions of **gym**, including our **gym-auv** package, implement a subclass of `gym.Env` which overrides the core abstract methods: \_\_init\_\_, which defines the environment’s action and observation space; step, which simulates the environment for one timestep after an action has been performed and returns the observation vector and reward; reset, which resets the environment state to the initial state; and render, which renders the environment to the screen. In our case, this class is
 named BaseEnvironment.
 
@@ -99,6 +98,4 @@ Extending the gym.Env base environment class, BaseEnvironment is the access poin
 
 ## Known bugs
 
-* TestScenarios and DebugScenario have constant reward while training
-* TestScenarios and DebugScenario gets -5000 constant reward after crash in play mode
 * Lots of deprecation warnings because of TensorFlow 1
