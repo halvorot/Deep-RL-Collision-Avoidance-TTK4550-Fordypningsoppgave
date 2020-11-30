@@ -39,7 +39,7 @@ python run.py play TestScenario1-v0
 python run.py train MovingObstaclesNoRules-v0
 ``` 
 ```
-python run.py enjoy MovingObstaclesNoRules-v0 --agent path\to\agent.pkl
+python run.py enjoy MovingObstaclesNoRules-v0 --algo algorithm --agent path\to\agent.pkl
 ``` 
 
 
