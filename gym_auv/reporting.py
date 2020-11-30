@@ -249,15 +249,16 @@ def plot_trajectory(env, fig_dir, local=False, size=100, fig_prefix='', episode_
                 y_arr = [elm[1][1] for elm in obst.trajectory]
                 ax.plot(x_arr, y_arr, dashes=[6, 2], color='red', linewidth=0.5, alpha=0.3)
 
-            plt.arrow(
-                obst.init_boundary.centroid.coords[0][0],
-                obst.init_boundary.centroid.coords[0][1],
-                120*obst.dx,
-                120*obst.dy,
-                head_width=3 if local else 8,
-                color='black',
-                zorder=9
-            )
+            if not local:
+                plt.arrow(
+                    obst.init_boundary.centroid.coords[0][0],
+                    obst.init_boundary.centroid.coords[0][1],
+                    120*obst.dx,
+                    120*obst.dy,
+                    head_width=3 if local else 8,
+                    color='black',
+                    zorder=9
+                )
 
     for obst in obstacles:
         if isinstance(obst, VesselObstacle):

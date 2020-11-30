@@ -302,6 +302,7 @@ def main(args):
         obs = recorded_env.reset()
         state = None
         t_steps = 0
+        ep_number = 1
         done = [False for _ in range(vec_env.num_envs)]
         for _ in range(args.recording_length):
             if args.recurrent:
@@ -310,12 +311,16 @@ def main(args):
             else:
                 action, _states = agent.predict(obs, deterministic=not args.stochastic)
             obs, reward, done, info = recorded_env.step(action)
-            t_steps += 1
             recorded_env.render()
-            if t_steps % 1000 == 0:
-                env.save_latest_episode(save_history=False)
-                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_{}'.format(t_steps)))
-                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_{}_local'.format(t_steps)), local=True)
+            t_steps += 1
+            
+            if t_steps % 800 == 0 or done:
+                if not done:
+                    env.save_latest_episode(save_history=False)
+                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_ep{}_step{}'.format(ep_number, t_steps)))
+                gym_auv.reporting.plot_trajectory(env, fig_dir=scenario_folder, fig_prefix=(args.env + '_ep{}_step{}_local'.format(ep_number, t_steps)), local=True)
+            if done:
+                ep_number += 1
         recorded_env.close()
 
     elif (args.mode == 'train'):

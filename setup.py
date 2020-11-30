@@ -1,4 +1,3 @@
-## NOT COMPLETE ##
 
 from setuptools import setup
 
