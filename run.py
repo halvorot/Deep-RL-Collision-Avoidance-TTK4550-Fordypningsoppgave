@@ -19,7 +19,7 @@ import stable_baselines.ddpg.policies
 import stable_baselines.td3.policies
 import stable_baselines.sac.policies
 from stable_baselines.ddpg import AdaptiveParamNoiseSpec, NormalActionNoise, LnMlpPolicy
-from stable_baselines import PPO2, DDPG, TD3, A2C, ACER, ACKTR, SAC
+from stable_baselines import PPO2, DDPG, TD3, A2C, ACER, ACKTR, SAC, TRPO
 from sklearn.model_selection import ParameterGrid
 from shapely import speedups
 from stable_baselines.gail import ExpertDataset
@@ -260,7 +260,8 @@ def main(args):
         'a2c': A2C,
         'acer': ACER,
         'acktr': ACKTR,
-        'sac': SAC
+        'sac': SAC,
+        'trpo': TRPO
     }[args.algo.lower()]
 
     if args.mode == 'play':
@@ -336,7 +337,7 @@ def main(args):
         tensorboard_log = os.path.join(DIR_PATH, 'logs', 'tensorboard', args.env, EXPERIMENT_ID)
         tensorboard_port = 6006
 
-        if (args.nomp or model == DDPG or model == TD3 or model == SAC):
+        if (args.nomp or model == DDPG or model == TD3 or model == SAC or model == TRPO):
             num_cpu = 1
             vec_env = DummyVecEnv([lambda: create_env(env_id, envconfig, pilot=args.pilot)])
         else:
@@ -493,6 +494,8 @@ def main(args):
                 # }
                 # agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log, **hyperparams)
                 agent = SAC(stable_baselines.sac.MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
+            elif model == TRPO:
+                agent = TRPO(MlpPolicy, vec_env, verbose=True, tensorboard_log=tensorboard_log)
 
         print('Training {} agent on "{}"'.format(args.algo.upper(), env_id))
 
@@ -532,7 +535,7 @@ def main(args):
                 recording_criteria = n_updates % 10 == 0
                 report_criteria = True
                 _self.save(agent_filepath)
-            elif model == A2C or model == ACER or model == ACKTR or model == SAC:
+            elif model == A2C or model == ACER or model == ACKTR or model == SAC or model == TRPO:
                 save_criteria = n_updates % 100 == 0
                 recording_criteria = n_updates % 1000 == 0
                 report_criteria = True
@@ -788,7 +791,7 @@ if __name__ == '__main__':
         '--algo',
         help='RL algorithm to use.',
         default='ppo',
-        choices=['ppo', 'ddpg', 'td3', 'a2c', 'acer', 'acktr', 'sac']
+        choices=['ppo', 'ddpg', 'td3', 'a2c', 'acer', 'acktr', 'sac','trpo']
     )
     parser.add_argument(
         '--render',
