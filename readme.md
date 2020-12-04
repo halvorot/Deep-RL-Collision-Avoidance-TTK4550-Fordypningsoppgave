@@ -1,6 +1,7 @@
 # gym-auv
 
-Python simulation framework for Collision Avoidance for Unmanned Surface Vehicle using Deep Reinforcement Learning
+Python simulation framework for Collision Avoidance for Unmanned Surface Vehicle using Deep Reinforcement Learning.
+
 An explanation of the software structure can be found in Eivind Meyers repository [gym-auv](https://github.com/EivMeyer)
 
 ## Getting Started
