@@ -46,4 +46,5 @@ python run.py enjoy MovingObstaclesNoRules-v0 --algo algorithm --agent path\to\a
 
 ## Known bugs
 
+* terrain.npy is missing from "resources/" because github does not support uploading large files. (reach out for a copy of this file)
 * Lots of deprecation warnings because of TensorFlow 1
