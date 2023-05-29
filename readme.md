@@ -1,4 +1,4 @@
-# gym-auv
+# Collision Avoidance simulator for USV using Deep RL
 
 Python simulation framework for Collision Avoidance for Unmanned Surface Vehicle using Deep Reinforcement Learning.
 
